@@ -18,6 +18,7 @@ func StartHttpServer() {
 	router := gin.Default()
 
 	routes.Health(router)
+	routes.User(router)
 
 	server := &http.Server{
 		Addr:    fmt.Sprintf(":%s", config.Global.PORT),
