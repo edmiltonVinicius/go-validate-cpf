@@ -1,0 +1,34 @@
+version: "2"
+
+services:
+  # backend:
+  #   container_name: "backend-go-validate"
+  #   build: .
+  #   restart: unless-stoped
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - go-validate-network
+
+  db:
+    image: postgres:alpine
+    container_name: "postgres-go-validate"
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+    networks:
+      - go-validate-network
+
+networks:
+  go-validate-network:
+
+volumes:
+  postgres-db:
