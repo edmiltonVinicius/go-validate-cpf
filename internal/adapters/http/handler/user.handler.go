@@ -6,8 +6,8 @@ import (
 	"github.com/edmiltonVinicius/go-validate-cpf/internal/adapters/database/repository"
 	request "github.com/edmiltonVinicius/go-validate-cpf/internal/adapters/http/request/user"
 	"github.com/edmiltonVinicius/go-validate-cpf/internal/config"
-	"github.com/edmiltonVinicius/go-validate-cpf/internal/core/user"
 	"github.com/edmiltonVinicius/go-validate-cpf/internal/core/user/dto"
+	user_service "github.com/edmiltonVinicius/go-validate-cpf/internal/core/user/service"
 	"github.com/gin-gonic/gin"
 )
 
@@ -23,7 +23,7 @@ func GetUserById(c *gin.Context) {
 	}
 
 	ur := repository.NewUserRepository(config.Global.DB)
-	us := user.NewUserService(ur)
+	us := user_service.NewUserService(ur)
 	input := dto.GetUserByIdInput{ID: param.ID}
 
 	output, err := us.GetById(input)
