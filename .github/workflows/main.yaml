@@ -3,7 +3,7 @@ name: CI / CD Pipeline - go-validate-cpf
 on:
   push:
     branches:
-      - TASK/configure-github-action
+      - main
 
   pull_request:
     types:
