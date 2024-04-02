@@ -1,10 +1,16 @@
-name: CI / CD Pipeline
+name: CI / CD Pipeline - go-validate-cpf
 
 on:
   push:
     branches:
       - TASK/configure-github-action
+
   pull_request:
+    types:
+      - opened
+      - reopened
+      - closed
+      - synchronize
     branches:
       - main
 jobs:
