@@ -1,4 +1,4 @@
-name: Go
+name: CI / CD Pipeline
 
 on:
   push:
@@ -24,8 +24,8 @@ jobs:
       - name: Verify dependencies
         run: go mod verify
 
-      # - name: Install dependencies
-      #   run: go get .
+      - name: Run build
+        run: go build -v ./...
 
       - name: Run tests
         run: go test -v ./...
