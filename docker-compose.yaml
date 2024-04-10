@@ -1,16 +1,22 @@
 version: "2"
 
 services:
-  # backend:
-  #   container_name: "backend-go-validate"
-  #   build: .
-  #   restart: unless-stoped
-  #   env_file:
-  #     - .env
-  #   depends_on:
-  #     - db
-  #   networks:
-  #     - go-validate-network
+  backend:
+    container_name: "backend-go-validate"
+    build:
+      context: .
+      dockerfile: ./docker/DockerfileDev
+    restart: unless-stopped
+    volumes:
+      - ./:/app
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - go-validate-network
 
   db:
     image: postgres:alpine
