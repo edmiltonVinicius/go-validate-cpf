@@ -1,8 +1,8 @@
 package port
 
-import "github.com/edmiltonVinicius/go-validate-cpf/internal/adapters/database/entity"
+import user_domain "github.com/edmiltonVinicius/go-validate-cpf/internal/core/user/domain"
 
 type UserRepositoryInterface interface {
-	Create(data entity.UserEntity) (*entity.UserEntity, error)
-	GetById(id int) (*entity.UserEntity, error)
+	Create(data user_domain.UserDomain) (*user_domain.UserDomain, error)
+	GetById(id int) (*user_domain.UserDomain, error)
 }

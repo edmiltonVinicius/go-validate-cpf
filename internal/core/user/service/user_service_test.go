@@ -1,1 +1,64 @@
 package user_service_test
+
+import (
+	"testing"
+
+	"github.com/edmiltonVinicius/go-validate-cpf/internal/core/__test__/mocks"
+	user_domain "github.com/edmiltonVinicius/go-validate-cpf/internal/core/user/domain"
+	"github.com/edmiltonVinicius/go-validate-cpf/internal/core/user/dto"
+	"github.com/edmiltonVinicius/go-validate-cpf/internal/core/user/port"
+	user_service "github.com/edmiltonVinicius/go-validate-cpf/internal/core/user/service"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
+	"github.com/stretchr/testify/suite"
+)
+
+type UserRepositoryMock struct {
+	mock.Mock
+}
+
+func (m *UserRepositoryMock) Create(data user_domain.UserDomain) (output *user_domain.UserDomain, err error) {
+	args := m.Called(data)
+	return args.Get(0).(*user_domain.UserDomain), args.Error(1)
+}
+
+func (m *UserRepositoryMock) GetById(id int) (output *user_domain.UserDomain, err error) {
+	args := m.Called(id)
+	return args.Get(0).(*user_domain.UserDomain), args.Error(1)
+}
+
+type UserServiceTestSuite struct {
+	suite.Suite
+	repository  UserRepositoryMock
+	userService port.UserServiceInterface
+}
+
+func (suite *UserServiceTestSuite) SetupTest() {
+	mockRepository := new(UserRepositoryMock)
+	suite.userService = user_service.NewUserService(mockRepository)
+}
+
+// TestUserService_Create - Test if the method Create returns the correct value
+func (suite *UserServiceTestSuite) TestUserService_Create() {
+	userDomainMock := mocks.CreateUserDomainMock()
+	userDtoMock := dto.CreateUserInput{
+		Name:     "Mock",
+		Email:    "email@mock.com",
+		Password: "password_mock",
+		Cpf:      "12345678909",
+	}
+
+	suite.repository.On("Create", mock.Anything).Return(userDomainMock, nil)
+	result, err := suite.userService.Create(userDtoMock)
+
+	suite.repository.AssertExpectations(suite.T())
+	suite.repository.AssertNumberOfCalls(suite.T(), "Create", 1)
+
+	assert.NoError(suite.T(), err)
+	assert.NotNil(suite.T(), result)
+}
+
+// TestUserServiceSuite - Start the test suite
+func TestUserServiceSuite(t *testing.T) {
+	suite.Run(t, new(UserServiceTestSuite))
+}
