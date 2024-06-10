@@ -32,6 +32,11 @@ func (m *UserRepositoryMock) GetByEmail(email string) (output *user_domain.UserD
 	return nil, args.Error(1)
 }
 
+func (m *UserRepositoryMock) GetAll() (output []*user_domain.UserDomain, err error) {
+	args := m.Called()
+	return nil, args.Error(1)
+}
+
 type UserServiceTestSuite struct {
 	suite.Suite
 	repository  UserRepositoryMock
