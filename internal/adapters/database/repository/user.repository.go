@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/edmiltonVinicius/go-validate-cpf/internal/adapters/database/entity"
+	user_domain "github.com/edmiltonVinicius/go-validate-cpf/internal/core/user/domain"
 	"gorm.io/gorm"
 )
 
@@ -15,12 +15,18 @@ func NewUserRepository(db *gorm.DB) *userRepository {
 	}
 }
 
-func (ur *userRepository) Create(data entity.UserEntity) (entity *entity.UserEntity, err error) {
+func (ur *userRepository) Create(data user_domain.UserDomain) (entity *user_domain.UserDomain, err error) {
 	return
 }
 
-func (ur *userRepository) GetById(id int) (ent *entity.UserEntity, err error) {
-	data := entity.UserEntity{Name: "oi"}
-	ent = &data
+func (ur *userRepository) GetById(id int) (entity *user_domain.UserDomain, err error) {
+	return
+}
+
+func (ur *userRepository) GetByEmail(email string) (entity *user_domain.UserDomain, err error) {
+	return
+}
+
+func (ur *userRepository) GetAll() (entities []*user_domain.UserDomain, err error) {
 	return
 }

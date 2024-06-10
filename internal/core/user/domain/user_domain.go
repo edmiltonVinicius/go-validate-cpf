@@ -23,6 +23,24 @@ func NewUserDomain() *UserDomain {
 	return &UserDomain{}
 }
 
+func (u *UserDomain) Create(name, email, password, cpf string, birthday time.Time) (err error) {
+	u.SetName(name)
+	u.SetEmail(email)
+	err = u.SetPassword(password)
+	if err != nil {
+		return
+	}
+	u.SetBirthday(birthday)
+	u.SetActive(true)
+	u.SetCpf(cpf)
+	u.SetStatusCpfValidation(enum.PENDING)
+	u.SetCreatedAt(time.Now())
+	u.SetCreatedAt(time.Now())
+
+	err = u.Validate()
+	return
+}
+
 func (u *UserDomain) Validate() error {
 	return nil
 }
