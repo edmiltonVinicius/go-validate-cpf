@@ -1,31 +1,23 @@
-package user_domain
+package user_domain_test
 
 import (
 	"testing"
 	"time"
 
+	"github.com/edmiltonVinicius/go-validate-cpf/internal/core/__test__/mocks"
 	"github.com/edmiltonVinicius/go-validate-cpf/internal/core/shared/enum"
+	user_domain "github.com/edmiltonVinicius/go-validate-cpf/internal/core/user/domain"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 )
 
 type UserDomainTestSuite struct {
 	suite.Suite
-	userMock *userDomain
+	userMock *user_domain.UserDomain
 }
 
 func (suite *UserDomainTestSuite) SetupTest() {
-	suite.userMock = &userDomain{
-		Name:                "John Doe",
-		Email:               "mock@email.com",
-		Password:            "123456",
-		Active:              true,
-		Cpf:                 "12345678909",
-		Birthday:            time.Now().In(time.UTC),
-		StatusCpfValidation: enum.PENDING,
-		CreatedAt:           time.Now(),
-		UpdatedAt:           time.Now(),
-	}
+	suite.userMock = mocks.CreateUserDomainMock()
 }
 
 // TestUserDomain_GetName - Test if the method GetName returns the correct value
@@ -105,6 +97,7 @@ func (suite *UserDomainTestSuite) TestUserDomain_SetStatusCpfValidation_WithPend
 	assert.Error(suite.T(), err)
 }
 
-func TestExampleTestSuite(t *testing.T) {
+// TestUserDomainTestSuite - Start the test suite
+func TestUserDomainTestSuite(t *testing.T) {
 	suite.Run(t, new(UserDomainTestSuite))
 }

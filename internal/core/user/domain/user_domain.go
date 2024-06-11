@@ -8,110 +8,127 @@ import (
 	"github.com/edmiltonVinicius/go-validate-cpf/internal/core/shared/utils"
 )
 
-type userDomain struct {
-	Name                string
-	Email               string
-	Password            string
-	Active              bool
-	Cpf                 string
-	Birthday            time.Time
-	StatusCpfValidation enum.StatusValidation
-	CreatedAt           time.Time
-	UpdatedAt           time.Time
+type UserDomain struct {
+	name                string
+	email               string
+	password            string
+	active              bool
+	cpf                 string
+	birthday            time.Time
+	statusCpfValidation enum.StatusValidation
+	createdAt           time.Time
 }
 
-func NewUserDomain() *userDomain {
-	return &userDomain{}
+func NewUserDomain() *UserDomain {
+	return &UserDomain{}
 }
 
-func (u *userDomain) Validate() error {
+func (u *UserDomain) Create(name, email, password, cpf string, birthday time.Time) (err error) {
+	u.SetName(name)
+	u.SetEmail(email)
+	err = u.SetPassword(password)
+	if err != nil {
+		return
+	}
+	u.SetBirthday(birthday)
+	u.SetActive(true)
+	u.SetCpf(cpf)
+	u.SetStatusCpfValidation(enum.PENDING)
+	u.SetCreatedAt(time.Now())
+	u.SetCreatedAt(time.Now())
+
+	err = u.Validate()
+	return
+}
+
+func (u *UserDomain) Validate() error {
 	return nil
 }
 
-func (u *userDomain) GetName() string {
-	return u.Name
+func (u *UserDomain) GetName() string {
+	return u.name
 }
 
-func (u *userDomain) SetName(n string) {
-	u.Name = n
+func (u *UserDomain) SetName(n string) {
+	u.name = n
 }
 
-func (u *userDomain) GetEmail() string {
-	return u.Email
+func (u *UserDomain) GetEmail() string {
+	return u.email
 }
 
-func (u *userDomain) SetEmail(e string) {
-	u.Email = e
+func (u *UserDomain) SetEmail(e string) {
+	u.email = e
 }
 
-func (u *userDomain) GetPassword() string {
-	return u.Password
+func (u *UserDomain) GetPassword() string {
+	return u.password
 }
 
-func (u *userDomain) SetPassword(p string) (err error) {
+func (u *UserDomain) SetPassword(p string) (err error) {
 	hash, err := utils.Hash(p, 15)
 	if err != nil {
 		return err
 	}
-	u.Password = hash
+	u.password = hash
 	return
 }
 
-func (u *userDomain) ComparePassword(p string) (isValid bool) {
-	isValid = utils.CompareHash(p, u.Password)
+func (u *UserDomain) ComparePassword(p string) (isValid bool) {
+	isValid = utils.CompareHash(p, u.password)
 	return
 }
 
-func (u *userDomain) GetActive() bool {
-	return u.Active
+func (u *UserDomain) GetActive() bool {
+	return u.active
 }
 
-func (u *userDomain) SetActive(a bool) {
-	u.Active = a
+func (u *UserDomain) SetActive(a bool) {
+	u.active = a
 }
 
-func (u *userDomain) GetBirthday() time.Time {
-	return u.Birthday
+func (u *UserDomain) GetCpf() string {
+	return u.cpf
 }
 
-func (u *userDomain) SetBirthday(t time.Time) error {
-	if t.After(u.GetBirthday()) {
+func (u *UserDomain) SetCpf(c string) {
+	u.cpf = c
+}
+
+func (u *UserDomain) GetBirthday() time.Time {
+	return u.birthday
+}
+
+func (u *UserDomain) SetBirthday(t time.Time) error {
+	if t.After(time.Now()) {
 		return errors.New("invalid date")
 	}
 
-	u.Birthday = t
+	u.birthday = t
 	return nil
 }
 
-func (u *userDomain) GetStatusCpfValidation() string {
-	return u.StatusCpfValidation.String()
+func (u *UserDomain) GetStatusCpfValidation() string {
+	return u.statusCpfValidation.String()
 }
 
-func (u *userDomain) SetStatusCpfValidation(s enum.StatusValidation) error {
-	if s == enum.PENDING && u.StatusCpfValidation != enum.PENDING {
+func (u *UserDomain) SetStatusCpfValidation(s enum.StatusValidation) error {
+	if s == enum.PENDING && (u.statusCpfValidation == enum.APPROVED || u.statusCpfValidation == enum.REPROVED) {
 		return errors.New("invalid status")
 	}
 
-	if s == u.StatusCpfValidation {
+	if s == u.statusCpfValidation {
 		return nil
 	}
 
-	u.StatusCpfValidation = s
+	u.statusCpfValidation = s
 	return nil
 }
 
-func (u *userDomain) GetCreatedAt() time.Time {
-	return u.CreatedAt
+func (u *UserDomain) GetCreatedAt() time.Time {
+	return u.createdAt
 }
 
-func (u *userDomain) SetCreatedAt(t time.Time) {
-	u.CreatedAt = t
-}
-
-func (u *userDomain) GetUpdatedAt() time.Time {
-	return u.UpdatedAt
-}
-
-func (u *userDomain) SetUpdatedAt(t time.Time) {
-	u.UpdatedAt = t
+func (u *UserDomain) SetCreatedAt(t time.Time) {
+	u.createdAt = t
 }
