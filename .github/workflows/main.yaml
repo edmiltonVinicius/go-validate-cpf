@@ -33,5 +33,10 @@ jobs:
       - name: Run build
         run: go build -v ./...
 
-      - name: Run tests
-        run: go test -v ./...
+      - name: Run tests with coverage
+        run: go test -v ./... -coverprofile=./cover.out -covermode=atomic -coverpkg=./...
+
+      - name: Check test coverage
+        uses: vladopajic/go-test-coverage@v2
+        with:
+            config: ./.test_coverage.yml
