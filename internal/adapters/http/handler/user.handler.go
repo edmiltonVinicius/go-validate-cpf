@@ -3,8 +3,8 @@ package handler
 import (
 	"net/http"
 
-	"github.com/edmiltonVinicius/go-validate-cpf/internal/adapters/database/repository"
 	request "github.com/edmiltonVinicius/go-validate-cpf/internal/adapters/http/request/user"
+	"github.com/edmiltonVinicius/go-validate-cpf/internal/adapters/persistence/repository"
 	"github.com/edmiltonVinicius/go-validate-cpf/internal/config"
 	"github.com/edmiltonVinicius/go-validate-cpf/internal/core/user/dto"
 	user_service "github.com/edmiltonVinicius/go-validate-cpf/internal/core/user/service"
