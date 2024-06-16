@@ -40,3 +40,13 @@ jobs:
         uses: vladopajic/go-test-coverage@v2
         with:
             config: ./.test_coverage.yml
+            
+  scan-vulnerability:
+    uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v1.6.2-beta1"
+    with:
+      scan-args: |-
+        --lockfile=./../../go.mod
+    permissions:
+      security-events: write
+      contents: read
+
