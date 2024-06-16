@@ -40,3 +40,10 @@ jobs:
         uses: vladopajic/go-test-coverage@v2
         with:
             config: ./.test_coverage.yml
+
+      - name: osv-scanner
+        uses: google/osv-scanner-action@v1.7.3
+        with:
+           scan-args: |-
+            --lockfile 'go.mod'
+          
