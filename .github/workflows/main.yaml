@@ -44,7 +44,6 @@ jobs:
   scan-pr:
     uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v1.6.2-beta1"
     with:
-        scan-args: |-
+      scan-args: |-
         --lockfile=./../../go.mod
-        --lockfile=requirements.txt:./path/to/python-lockfile2.txt
 
