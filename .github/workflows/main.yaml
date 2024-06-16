@@ -41,7 +41,7 @@ jobs:
         with:
             config: ./.test_coverage.yml
             
-  scan-pr:
+  osv-scan:
     uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v1.6.2-beta1"
     with:
       scan-args: |-
