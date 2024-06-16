@@ -1,4 +1,4 @@
-package database
+package persistence
 
 import (
 	"fmt"
@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	path_migrations = "file://internal/adapters/database/sql/migrations"
+	path_migrations = "file://internal/adapters/persistence/sql/migrations"
 )
 
 func ConnectDatabase() (*gorm.DB, error) {
