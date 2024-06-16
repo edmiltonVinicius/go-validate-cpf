@@ -40,7 +40,14 @@ jobs:
         uses: vladopajic/go-test-coverage@v2
         with:
             config: ./.test_coverage.yml
-
+            
+  osv-scan:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: ["1.19", "1.20", "1.21.x", "1.22"]
+        
+    steps:
       - name: osv-scanner
         uses: google/osv-scanner-action@v1.7.3
         with:
