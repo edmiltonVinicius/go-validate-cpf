@@ -46,4 +46,7 @@ jobs:
     with:
       scan-args: |-
         --lockfile=./../../go.mod
+    permissions:
+      security-events: write
+      contents: read
 
